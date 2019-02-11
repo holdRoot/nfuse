@@ -2,6 +2,6 @@
 #include <fuse.h>
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    std::cout << "The NFuse Distributed Filesystem" << std::endl;
     return 0;
 }
