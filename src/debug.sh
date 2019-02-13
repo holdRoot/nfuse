@@ -1,12 +1,12 @@
 #!/bin/bash
 
-umount store
+umount store &> /dev/null
 rm -rf store
 
 mkdir store
 
 make
 
-nfuse store
+./nfuse store
 
 make clean
