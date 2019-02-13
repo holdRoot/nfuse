@@ -1,9 +1,9 @@
 PROG=nfuse
 OBJDIR=.obj
-CC=g++-8
+CC=g++
 
-CFLAGS = -Wall --std=c++0x -fpermissive `pkg-config fuse --cflags` -DFUSE_USE_VERSION=26 -I /usr/local/Cellar/boost/1.68.0_1/include -L /usr/local/Cellar/boost/1.68.0_1/lib -I ..
-LDFLAGS = `pkg-config fuse --libs`
+CFLAGS = -Wall --std=c++14 `pkg-config fuse3 --cflags` -I..
+LDFLAGS = `pkg-config fuse3 --libs`
 
 $(shell mkdir -p $(OBJDIR)) 
 

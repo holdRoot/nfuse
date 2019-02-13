@@ -1,3 +1,5 @@
+// See  FUSE:  example/hello.c
+
 #include "nfuseFS.h"
 
 int main(int argc, char *argv[])
