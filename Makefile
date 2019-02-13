@@ -1,4 +1,4 @@
-PROG=hello
+PROG=nfuse
 OBJDIR=.obj
 CC=g++-8
 
@@ -7,7 +7,7 @@ LDFLAGS = `pkg-config fuse --libs`
 
 $(shell mkdir -p $(OBJDIR)) 
 
-OBJS = $(OBJDIR)/hello.o $(OBJDIR)/helloFS.o
+OBJS = $(OBJDIR)/nfuse.o $(OBJDIR)/nfuseFS.o
 
 $(PROG) : $(OBJS)
 	$(CC) $(OBJS) $(LDFLAGS) -o $(PROG)

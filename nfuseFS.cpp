@@ -1,6 +1,6 @@
 // Hello filesystem class implementation
 
-#include "helloFS.h"
+#include "nfuseFS.h"
 
 #include <iostream>
 

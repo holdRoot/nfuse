@@ -1,6 +1,4 @@
-// See  FUSE:  example/hello.c
-
-#include "helloFS.h"
+#include "nfuseFS.h"
 
 int main(int argc, char *argv[])
 {
