@@ -31,6 +31,14 @@
             ]
         },
         {
+            "label": "Clean",
+            "command": "make",
+            "args": ["clean"],
+            "options": {
+                "cwd": "${workspaceRoot}/"
+            }
+        },
+        {
             "label": "Build",
             "dependsOn": [
                 "FS Build",
