@@ -3,9 +3,9 @@
 int main(int argc, char *argv[])
 {
 
-  NFuse fs;
+  	NFuse fs;
 
-  int status = fs.run(argc, argv);
+  	int status = fs.run(argc, argv);
 
-  return status;
+  	return status;
 }

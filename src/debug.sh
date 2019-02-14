@@ -1,11 +1,11 @@
 #!/bin/bash
 
-umount store &> /dev/null
+sudo umount store
 rm -rf store
 
 mkdir store
 
-make
+bear make
 
 ./nfuse store
 
