@@ -6,13 +6,13 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 
 
 include_directories(.)
-include_directories(src)
+include_directories(src/include)
 include_directories(/usr/local/include/fuse3)
 
 add_executable(nfuse
-        src/nfuse.cpp
-        src/nfuseFS.cpp
-        src/nfuseFS.h
+        src/lib/nfuse.cpp
+        src/lib/nfuseFS.cpp
+        src/include/nfuseFS.h
         Fuse-impl.h
         Fuse.cpp
         Fuse.h)

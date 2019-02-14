@@ -1,4 +1,4 @@
-#include "nfuseFS.h"
+#include "src/include/nfuseFS.h"
 
 #include <iostream>
 
@@ -20,6 +20,18 @@ prep()
 }
 
 int
+test_bench()
+{
+    std::cout << "Last stats: " << std::endl;
+    int res = 0;
+    auto fd = open("nfusestore", 0);
+    struct stat stat1{};
+    res = fstat(fd, &stat1);
+    std::cout << "Last modified: " << stat1.st_atim.tv_sec << std::endl;
+    return res;
+}
+
+int
 main(int argc, char *argv[])
 {
     std::cout << "Welcome to NFuse!" << std::endl;
@@ -27,10 +39,10 @@ main(int argc, char *argv[])
     {
         std::cerr << "Setup failed!" << std::endl;
     }
+    test_bench();
 
     NFuse fs;
 
     int status = fs.run(argc, argv);
-
     return status;
 }
