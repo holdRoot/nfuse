@@ -30,7 +30,7 @@
 #define FUSE_USE_VERSION 30
 #endif
 
-#include <fuse.h>
+#include <fuse3/fuse.h>
 #include <cstring>
 
 namespace Fusepp

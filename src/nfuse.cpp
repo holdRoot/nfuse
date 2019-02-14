@@ -1,11 +1,36 @@
 #include "nfuseFS.h"
 
-int main(int argc, char *argv[])
+#include <iostream>
+
+int
+prep()
 {
+    int res = 0;
 
-  	NFuse fs;
+    system("sudo umount nfusestore");
+    res = system("rm -rf nfusestore");
+    if (res)
+        return res;
 
-  	int status = fs.run(argc, argv);
+    res = system("mkdir nfusestore");
+    if (res)
+        return res;
 
-  	return status;
+    return res;
+}
+
+int
+main(int argc, char *argv[])
+{
+    std::cout << "Welcome to NFuse!" << std::endl;
+    if (prep())
+    {
+        std::cerr << "Setup failed!" << std::endl;
+    }
+
+    NFuse fs;
+
+    int status = fs.run(argc, argv);
+
+    return status;
 }
