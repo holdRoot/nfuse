@@ -5,4 +5,4 @@ build
 nfuse
 store
 compile_commands.json
-remote.sh
+
