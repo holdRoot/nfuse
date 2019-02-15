@@ -5,5 +5,4 @@ build
 nfuse
 store
 compile_commands.json
-generated
 
