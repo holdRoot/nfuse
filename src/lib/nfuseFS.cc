@@ -67,6 +67,7 @@ int
 NFuse::read(const char *path, char *buf, size_t size, off_t offset,
             struct fuse_file_info *)
 {
+    std::cout << "Requesting read -> I'm adding to cache" << std::endl;
     if (path!=hello_path)
         return -ENOENT;
 

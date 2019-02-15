@@ -3,14 +3,17 @@ project( nfuse )
 
 set( CMAKE_CXX_STANDARD 17 )
 set( CMAKE_VERBOSE_MAKEFILE ON )
-
 set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
+
+# External libraries
+add_subdirectory( external/llist )
 
 find_package( Protobuf REQUIRED )
 
 include_directories( . )
 include_directories( generated )
 include_directories( src/include )
+include_directories( external )
 include_directories( /usr/local/include/fuse3 )
 
 # gRPC configs
@@ -54,9 +57,10 @@ add_executable( nfuse
     src/lib/nfuse.cc
     src/lib/nfuseFS.cc
     src/include/nfuseFS.h
+    src/lib/fs/fcache.cc
     Fuse-impl.h
     Fuse.cpp
     Fuse.h )
 
-target_link_libraries( nfuse pthread fuse3 )
+target_link_libraries( nfuse llist pthread fuse3 )
 

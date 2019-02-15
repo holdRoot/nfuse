@@ -1,4 +1,5 @@
-#include "src/include/nfuseFS.h"
+#include <nfuseFS.h>
+#include <fs/fcache.h>
 
 #include <iostream>
 #include <fstream>
@@ -75,6 +76,7 @@ test_bench()
 int
 main(int argc, char *argv[])
 {
+    FCache::setup();
     std::cout << "Welcome to NFuse!" << std::endl;
     if (prep())
     {

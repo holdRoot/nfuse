@@ -1,4 +1,5 @@
-#include <unistd.h>
 
-typedef uint64_t INODE_ID;
-typedef uint64_t EVENT_ID;
+typedef unsigned long long INODE_ID;
+typedef unsigned long long EVENT_ID;
+
+typedef unsigned long int bsize;
