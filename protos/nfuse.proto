@@ -5,18 +5,23 @@ option objc_class_prefix = "HLW";
 
 package nfuse;
 
-// The greeting service definition.
-service Greeter {
-    // Sends a greeting
-    rpc SayHello (HelloRequest) returns (HelloReply) {}
+// Definitions of I/O ops
+service IOSpace {
+    rpc NullPing (Call) returns (Call) {}
 }
 
-// The request message containing the user's name.
-message HelloRequest {
-    string name = 1;
+
+message Call {
+    int64 stamp = 1;
+    int32 opcode = 2;
+    int64 tags = 3; // The number of incoming tags afterwards
+    string value = 4;
 }
 
-// The response message containing the greetings
-message HelloReply {
-    string message = 1;
+// The forward tag data structure
+message Tag {
+	int64 stamp = 1;
+	int32 type = 2;
+	string value = 3;
 }
+

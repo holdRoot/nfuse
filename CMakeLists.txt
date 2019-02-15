@@ -1,29 +1,31 @@
-cmake_minimum_required(VERSION 3.10)
-project(nfuse)
+cmake_minimum_required( VERSION 3.10 )
+project( nfuse )
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_VERBOSE_MAKEFILE ON)
+set( CMAKE_CXX_STANDARD 17 )
+set( CMAKE_VERBOSE_MAKEFILE ON )
 
-find_package(Protobuf REQUIRED)
+set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
 
-include_directories(.)
-include_directories(src/include)
-include_directories(/usr/local/include/fuse3)
+find_package( Protobuf REQUIRED )
+
+include_directories( . )
+include_directories( src/include )
+include_directories( /usr/local/include/fuse3 )
 
 # gRPC configs
-include_directories(/usr/local/include)
-link_directories(/usr/local/lib)
+include_directories( /usr/local/include )
+link_directories( /usr/local/lib )
 
-set(PROTO_PATH "${CMAKE_SOURCE_DIR}/protos")
-set(NFUSE_PROTO "${PROTO_PATH}/nfuse.proto")
-set(GENERATED_PROTOBUF_PATH "${CMAKE_BINARY_DIR}/generated")
-file(MAKE_DIRECTORY ${GENERATED_PROTOBUF_PATH})
+set( PROTO_PATH "${CMAKE_SOURCE_DIR}/protos" )
+set( NFUSE_PROTO "${PROTO_PATH}/nfuse.proto" )
+set( GENERATED_PROTOBUF_PATH "${CMAKE_BINARY_DIR}/generated" )
+file( MAKE_DIRECTORY ${GENERATED_PROTOBUF_PATH} )
 
-set(NFUSE_PB_CPP_FILE "${GENERATED_PROTOBUF_PATH}/nfuse.pb.cc")
-set(NFUSE_PB_H_FILE "${GENERATED_PROTOBUF_PATH}/nfuse.pb.h")
-set(NFUSE_GRPC_PB_CPP_FILE "${GENERATED_PROTOBUF_PATH}/nfuse.grpc.pb.cc")
-set(NFUSE_GRPC_PB_H_FILE "${GENERATED_PROTOBUF_PATH}/nfuse.grpc.pb.h")
-add_custom_command(
+set( NFUSE_PB_CPP_FILE "${GENERATED_PROTOBUF_PATH}/nfuse.pb.cc" )
+set( NFUSE_PB_H_FILE "${GENERATED_PROTOBUF_PATH}/nfuse.pb.h" )
+set( NFUSE_GRPC_PB_CPP_FILE "${GENERATED_PROTOBUF_PATH}/nfuse.grpc.pb.cc" )
+set( NFUSE_GRPC_PB_H_FILE "${GENERATED_PROTOBUF_PATH}/nfuse.grpc.pb.h" )
+add_custom_command (
         OUTPUT "${NFUSE_PB_H_FILE}"
         "${NFUSE_PB_CPP_FILE}"
         "${NFUSE_GRPC_PB_H_FILE}"
@@ -38,24 +40,22 @@ add_custom_command(
         "--plugin=protoc-gen-grpc=/usr/local/bin/grpc_cpp_plugin"
         "${NFUSE_PROTO}"
 )
-set(GENERATED_PROTOBUF_FILES ${NFUSE_PB_H_FILE} ${NFUSE_PB_CPP_FILE}
-        ${NFUSE_GRPC_PB_H_FILE} ${NFUSE_GRPC_PB_CPP_FILE})
+set( GENERATED_PROTOBUF_FILES ${NFUSE_PB_H_FILE} ${NFUSE_PB_CPP_FILE}
+        ${NFUSE_GRPC_PB_H_FILE} ${NFUSE_GRPC_PB_CPP_FILE} )
 
-include_directories(${GENERATED_PROTOBUF_PATH})
-link_libraries(grpc++_unsecure grpc gpr ${PROTOBUF_LIBRARY})
+include_directories( ${GENERATED_PROTOBUF_PATH} )
+link_libraries( grpc++_unsecure grpc gpr ${PROTOBUF_LIBRARY} )
 
-add_executable(greeter_server src/lib/grpc/greeter_server.cc ${GENERATED_PROTOBUF_FILES})
-add_executable(greeter_client src/lib/grpc/greeter_client.cc ${GENERATED_PROTOBUF_FILES} src/lib/grpc/greeter_server.cc src/lib/grpc/greeter_client.cc)
+add_executable( server src/lib/grpc/server.cc ${GENERATED_PROTOBUF_FILES} )
+add_executable( client src/lib/grpc/client.cc ${GENERATED_PROTOBUF_FILES} )
 
-add_executable(nfuse
-        src/lib/nfuse.cpp
-        src/lib/nfuseFS.cpp
+add_executable( nfuse
+        src/lib/nfuse.cc
+        src/lib/nfuseFS.cc
         src/include/nfuseFS.h
         Fuse-impl.h
         Fuse.cpp
-        Fuse.h)
+        Fuse.h )
 
-target_link_libraries(nfuse
-        pthread
-        fuse3
-        )
+target_link_libraries( nfuse pthread fuse3 )
+

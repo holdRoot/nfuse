@@ -1,0 +1,6 @@
+enum 
+STATUS
+{
+	SUCCESS,
+	FAIL
+};
