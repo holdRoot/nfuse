@@ -9,6 +9,7 @@ set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
 find_package( Protobuf REQUIRED )
 
 include_directories( . )
+include_directories( generated )
 include_directories( src/include )
 include_directories( /usr/local/include/fuse3 )
 
@@ -26,22 +27,22 @@ set( NFUSE_PB_H_FILE "${GENERATED_PROTOBUF_PATH}/nfuse.pb.h" )
 set( NFUSE_GRPC_PB_CPP_FILE "${GENERATED_PROTOBUF_PATH}/nfuse.grpc.pb.cc" )
 set( NFUSE_GRPC_PB_H_FILE "${GENERATED_PROTOBUF_PATH}/nfuse.grpc.pb.h" )
 add_custom_command (
-        OUTPUT "${NFUSE_PB_H_FILE}"
-        "${NFUSE_PB_CPP_FILE}"
-        "${NFUSE_GRPC_PB_H_FILE}"
-        "${NFUSE_GRPC_PB_CPP_FILE}"
-        COMMAND ${PROTOBUF_PROTOC_EXECUTABLE}
-        ARGS "--proto_path=${PROTO_PATH}"
-        "--cpp_out=${GENERATED_PROTOBUF_PATH}"
-        "${NFUSE_PROTO}"
-        COMMAND ${PROTOBUF_PROTOC_EXECUTABLE}
-        ARGS "--proto_path=${PROTO_PATH}"
-        "--grpc_out=${GENERATED_PROTOBUF_PATH}"
-        "--plugin=protoc-gen-grpc=/usr/local/bin/grpc_cpp_plugin"
-        "${NFUSE_PROTO}"
-)
+    OUTPUT "${NFUSE_PB_H_FILE}"
+    "${NFUSE_PB_CPP_FILE}"
+    "${NFUSE_GRPC_PB_H_FILE}"
+    "${NFUSE_GRPC_PB_CPP_FILE}"
+    COMMAND ${PROTOBUF_PROTOC_EXECUTABLE}
+    ARGS "--proto_path=${PROTO_PATH}"
+    "--cpp_out=${GENERATED_PROTOBUF_PATH}"
+    "${NFUSE_PROTO}"
+    COMMAND ${PROTOBUF_PROTOC_EXECUTABLE}
+    ARGS "--proto_path=${PROTO_PATH}"
+    "--grpc_out=${GENERATED_PROTOBUF_PATH}"
+    "--plugin=protoc-gen-grpc=/usr/local/bin/grpc_cpp_plugin"
+    "${NFUSE_PROTO}"
+	)
 set( GENERATED_PROTOBUF_FILES ${NFUSE_PB_H_FILE} ${NFUSE_PB_CPP_FILE}
-        ${NFUSE_GRPC_PB_H_FILE} ${NFUSE_GRPC_PB_CPP_FILE} )
+    ${NFUSE_GRPC_PB_H_FILE} ${NFUSE_GRPC_PB_CPP_FILE} )
 
 include_directories( ${GENERATED_PROTOBUF_PATH} )
 link_libraries( grpc++_unsecure grpc gpr ${PROTOBUF_LIBRARY} )
@@ -50,12 +51,12 @@ add_executable( server src/lib/grpc/server.cc ${GENERATED_PROTOBUF_FILES} )
 add_executable( client src/lib/grpc/client.cc ${GENERATED_PROTOBUF_FILES} )
 
 add_executable( nfuse
-        src/lib/nfuse.cc
-        src/lib/nfuseFS.cc
-        src/include/nfuseFS.h
-        Fuse-impl.h
-        Fuse.cpp
-        Fuse.h )
+    src/lib/nfuse.cc
+    src/lib/nfuseFS.cc
+    src/include/nfuseFS.h
+    Fuse-impl.h
+    Fuse.cpp
+    Fuse.h )
 
 target_link_libraries( nfuse pthread fuse3 )
 
